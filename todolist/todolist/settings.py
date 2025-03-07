@@ -11,25 +11,28 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
-
+import environ
+import os
 
 env = environ.Env(
     DEBUG=(bool, False)
 )
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-environ.Env.read_env(BASE_DIR.joinpath('.env')) # .env
+DEBUG = env('DEBUG')
 
-DEBUG = env('DEBUG')# путь до константы DEBUG
-SECRET_KEY = env('SECRET_KEY')  # путь до константы SECRET_KEY
+environ.Env.read_env(BASE_DIR.joinpath('.env'))
 
-ALLOWED_HOSTS = [*]
+SECRET_KEY = env('SECRET_KEY')
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'environ',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+
 ]
 
 MIDDLEWARE = [
@@ -84,6 +88,8 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
+AUTH_USER_MODEL = 'core.User'
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -122,6 +128,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'core.User'
+
 
 
