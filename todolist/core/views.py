@@ -1,11 +1,11 @@
-from django.shortcuts import render
-from rest_framework import generics, permissions
-from core.serializers import CreateUserSerializer, LoginSerializer, ProfileSerializer, UpdatePasswordSerializer
-from django.contrib.auth import login, logout
-from rest_framework import generics, status
-from rest_framework.response import Response
 from core.models import User
-
+from core.serializers import (CreateUserSerializer, LoginSerializer,
+                              ProfileSerializer, UpdatePasswordSerializer)
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from rest_framework import generics, permissions, status
+from rest_framework.response import Response
 
 
 class SignupView(generics.CreateAPIView):
@@ -36,3 +36,4 @@ class UpdatePasswordView(generics.UpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
